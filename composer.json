@@ -1,0 +1,18 @@
+{
+    "name": "samson/angular-routing-bundle",
+    "require": {
+        "friendsofsymfony/jsrouting-bundle": "*"
+    },
+    "authors": [
+        {
+            "name": "Bart van den Burg",
+            "email": "bart@samson-it.nl"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Samson\\Bundle\\AngularRoutingBundle": ""
+        }
+    },
+    "target-dir": "Samson/Bundle/AngularRoutingBundle"
+}
