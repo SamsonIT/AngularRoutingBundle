@@ -48,6 +48,13 @@ angular.module('Samson.Routing', ['ui.state'])
             addState(routeName+"-"+j, routeName, urls[j]);
         }
     }
+
+    $stateProvider.state('fallback', {
+        url: '/{path:.*}',
+        controller: function($scope, $location) {
+            window.location.href = $location.path();
+        }
+    })
 })
 ;
 
@@ -63,7 +70,15 @@ angular.module('Samson.Routing').factory('TabControlManager', function() {
     }
 });
 angular.module('Samson.Routing').controller('MainCtrl', function($scope, $state, $document, TabControlManager) {
-    $scope.$on('$stateChangeStart', function() {
+    var initialCall = true;
+
+    $scope.$on('$stateChangeStart', function(e) {
+        if (initialCall) {
+            initialCall = false;
+            e.preventDefault();
+            return;
+        }
+
         $scope.tabLoading = TabControlManager.isLoadingTab();
         $scope.loading = true;
     })
