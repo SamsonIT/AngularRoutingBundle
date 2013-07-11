@@ -58,19 +58,10 @@ angular.module('Samson.Routing', ['ui.state'])
 })
 ;
 
-angular.module('Samson.Routing').factory('TabControlManager', function() {
-    var loading;
-    return {
-        setLoadingTab: function(val) {
-            loading = val;
-        },
-        isLoadingTab: function() {
-            return !!loading;
-        }
-    }
-});
-angular.module('Samson.Routing').controller('MainCtrl', function($scope, $state, $document, TabControlManager) {
+angular.module('Samson.Routing').controller('MainCtrl', function($scope, $state, $document) {
     var initialCall = true;
+
+    $scope.loading = false;
 
     $scope.$on('$stateChangeStart', function(e) {
         if (initialCall) {
@@ -79,12 +70,9 @@ angular.module('Samson.Routing').controller('MainCtrl', function($scope, $state,
             return;
         }
 
-        $scope.tabLoading = TabControlManager.isLoadingTab();
         $scope.loading = true;
     })
     $scope.$on('$stateChangeSuccess', function() {
-        TabControlManager.setLoadingTab(false);
-        $scope.tabLoading = false;
         $scope.loading = false;
         setTimeout(function() {
             $document.get(0).title = $document.find('h1').text();
@@ -122,13 +110,12 @@ angular.module('Samson.Routing').directive('form', function() {
                     var linkFn = $compile(template);
                     linkFn($scope);
                     deferred.resolve(template);
-                    $location.url('/project/151');
                 }).error(function(data, xhr) {
-                        var template = angular.element(data);
-                        var linkFn = $compile(template);
-                        linkFn($scope);
-                        deferred.reject(template);
-                    });
+                    var template = angular.element(data);
+                    var linkFn = $compile(template);
+                    linkFn($scope);
+                    deferred.reject(template);
+                });
                 return deferred.promise;
             }
         }
