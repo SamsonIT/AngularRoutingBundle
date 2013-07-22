@@ -6,6 +6,7 @@ use Samson\Bundle\AngularRoutingBundle\Firewall\FirewallMap;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Http\Firewall;
 
 class FirewallListener {
@@ -20,7 +21,9 @@ class FirewallListener {
     {
         $firewallName = $this->map->getMapName($e->getRequest());
 
-        $this->listener->addHeader('X-Response-URI', $e->getRequest()->getRequestUri());
+        if ($e->getRequestType() == Kernel::MASTER_REQUEST) {
+            $this->listener->addHeader('X-Response-URI', $e->getRequest()->getRequestUri());
+        }
 
         if ($e->getRequest()->isXmlHttpRequest() && $e->getRequest()->headers->get('X-Firewall') && $firewallName != $e->getRequest()->headers->get('X-Firewall')) {
             $response = new Response('', 204, array('X-View-Refresh' => $e->getRequest()->getRequestUri()));
