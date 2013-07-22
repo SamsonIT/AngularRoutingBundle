@@ -4,5 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-
+    <services>
+        <service id="samson_angular.response_header_listener" class="Samson\Bundle\AngularRoutingBundle\Listener\ResponseHeaderListener">
+            <tag name="kernel.event_listener" event="kernel.response"/>
+        </service>
+        <service id="samson_angular.firewall_listener" class="Samson\Bundle\AngularRoutingBundle\Listener\FirewallListener">
+            <argument type="service" id="security.firewall.map"/>
+            <argument type="service" id="samson_angular.response_header_listener"/>
+            <tag name="kernel.event_listener" event="kernel.request"/>
+        </service>
+    </services>
 </container>
