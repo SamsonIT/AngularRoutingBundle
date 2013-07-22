@@ -6,7 +6,7 @@ angular.module('Samson.Routing', ['ui.state'])
     var addState = function(name, routeName, url) {
         $stateProvider.state(name, {
             url: url,
-            templateProvider: function($state, $stateParams, $http, $q, $location, urlFixer) {
+            templateProvider: function($state, $stateParams, $http, $q, $location, urlFixer, $window) {
                 var deferred = $q.defer();
                 var uri = Routing.generate(routeName, angular.extend($stateParams, $location.search()));
                 $http.get(uri, { headers: { 'X-Request-URI': uri } }).success(function(data, status, headers, config) {
