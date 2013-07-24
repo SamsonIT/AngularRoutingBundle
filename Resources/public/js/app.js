@@ -17,7 +17,6 @@ angular.module('Samson.Routing', ['ui.state'])
                         return;
                     }
 
-
                     if (headers('X-Response-URI')) {
                         urlFixer.fix(headers('X-Response-URI'));
                     }
@@ -152,7 +151,7 @@ angular.module('Samson.Routing').directive('form', function() {
                 }
 
                 var deferred = $q.defer();
-                $http[$form.get(0).method]($form.attr('action'), data, { headers: { 'Content-Type': $form.get(0).enctype } }).success(function(data, xhr, headers) {
+                $http[$form.get(0).method]($form.attr('action'), data, { headers: { 'X-Request-URI': $form.attr('action'), 'Content-Type': $form.get(0).enctype } }).success(function(data, xhr, headers) {
                     $http.defaults.headers.common['X-Firewall'] = headers('X-Firewall');
                     if (headers('X-View-Refresh')) {
                         deferred.reject();

@@ -19,6 +19,10 @@ class FirewallListener {
     }
     public function onKernelRequest(GetResponseEvent $e)
     {
+        if (!$e->getRequest()->headers->has('X-Request-URI')) {
+            return;
+        }
+
         $firewallName = $this->map->getMapName($e->getRequest());
 
         if ($e->getRequestType() == Kernel::MASTER_REQUEST) {
