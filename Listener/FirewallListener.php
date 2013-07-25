@@ -27,13 +27,12 @@ class FirewallListener {
 
         if ($e->getRequestType() == Kernel::MASTER_REQUEST) {
             $this->listener->addHeader('X-Response-URI', $e->getRequest()->getRequestUri());
+            $this->listener->addHeader('X-Firewall', $firewallName);
         }
 
         if ($e->getRequest()->isXmlHttpRequest() && $e->getRequest()->headers->get('X-Firewall') && $firewallName != $e->getRequest()->headers->get('X-Firewall')) {
             $response = new Response('', 204, array('X-View-Refresh' => $e->getRequest()->getRequestUri()));
             $e->setResponse($response);
         }
-
-        $this->listener->addHeader('X-Firewall', $firewallName);
     }
 }
