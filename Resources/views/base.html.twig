@@ -1,0 +1,24 @@
+{% extends 'SamsonFrameworkBundle::layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/samsonangularrouting/js/app.js') }}"></script>
+{% endblock %}
+
+
+{% block body_content %}
+    {% if app.request.xmlHttpRequest %}
+        {{ parent() }}
+    {% else %}
+        <div id="loading" class="ng-cloak" ng-show="loading"><br><br><br><br><br><br>Laden...</div>
+        <section style="height: 100%" id="contents" ui-view ng-show="!loading">
+            {{ parent() }}
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block full_body %}
+    <div ng-controller="MainCtrl">
+        {{ parent() }}
+    </div>
+{% endblock %}
