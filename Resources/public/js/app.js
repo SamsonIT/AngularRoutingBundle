@@ -146,7 +146,7 @@ angular.module('Samson.Routing').directive('form', function() {
                 var data =  $form.serialize();
 
                 var $button = $(e.target);
-                if ($button.attr('name') && $button.attr('value')) {
+                if ($button.attr('name')) {
                     data += encodeURI("&"+$button.attr('name')+"="+$button.attr('value'));
                 }
 
