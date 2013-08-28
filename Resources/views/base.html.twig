@@ -10,7 +10,7 @@
     {% if app.request.xmlHttpRequest %}
         {{ parent() }}
     {% else %}
-        <div id="loading" class="ng-cloak" ng-show="loading"><br><br><br><br><br><br>Laden...</div>
+        <div id="loading" class="ng-cloak" ng-show="loading">Laden...</div>
         <section style="height: 100%" id="contents" ui-view ng-show="!loading">
             {{ parent() }}
         </section>
